@@ -1,0 +1,42 @@
+﻿@using SharedDtos.DTO_s.NewsDto
+@model NewsDetailsDto
+
+<h2>Delete News Item</h2>
+
+<div class="card">
+    <div class="card-body">
+        @if (!string.IsNullOrEmpty(Model.ImagePath))
+        {
+            <div class="form-group">
+                <img id="imagePreview" style="height:200px;" src="@Model.ImagePath" class="img-thumbnail img-fluid" />
+            </div>
+        }
+
+        <div class="form-group">
+            <label asp-for="Title" class="control-label"></label>
+            <input asp-for="Title" disabled class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Content" class="control-label"></label>
+            <textarea asp-for="Content" disabled class="form-control"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="DatePublished" class="control-label"></label>
+            <input asp-for="DatePublished" disabled class="form-control" />
+        </div>
+    </div>
+
+    <form asp-action="Delete" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="Id" />
+        <div class="form-group">
+            <input type="submit" value="Delete" class="btn btn-danger" />
+        </div>
+
+        <div class="my-2">
+            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,38 @@
+﻿@model IEnumerable<FootballApiProject.Models.DTO_s.MatchsDto.MatchDto>
+
+<h2>Matches</h2>
+<div class="text-right mb-4">
+    <a href="@Url.Action("Dashboard", "AdminDashboard")" class="btn btn-secondary">Back to Dashboard</a>
+</div>
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New League</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Home Team</th>
+            <th>Away Team</th>
+            <th>Date & Time</th>
+            <th>Score</th>
+            <th>Result</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var match in Model)
+        {
+            <tr>
+                <td>@match.HomeTeamName</td>
+                <td>@match.AwayTeamName</td>
+                <td>@match.Date.ToString("dd/MM/yyyy HH:mm")</td> <!-- Display Date & Time -->
+                <td>@match.Score</td>
+                <td>@match.Result</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@match.MatchId" class="btn btn-primary">Edit</a>
+                    <a asp-action="Details" asp-route-id="@match.MatchId" class="btn btn-info">Details</a>
+                    <a asp-action="Delete" asp-route-id="@match.MatchId" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

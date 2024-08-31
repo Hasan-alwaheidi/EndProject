@@ -1,0 +1,12 @@
+﻿@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">@ViewBag.Error</div>
+}
+
+<form method="post" action="/AdminDashboard/Login">
+    <div class="form-group">
+        <label for="adminPassword">Password</label>
+        <input type="password" class="form-control" id="adminPassword" name="password" placeholder="Enter password">
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+</form>

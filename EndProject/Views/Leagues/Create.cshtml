@@ -1,0 +1,34 @@
+﻿@model FootballApiProject.Models.DTO_s.LeaguesDto.CreateLeagueDto
+
+<h2>Create League</h2>
+
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label asp-for="Name" class="control-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Country" class="control-label"></label>
+        <input asp-for="Country" class="form-control" />
+        <span asp-validation-for="Country" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Season" class="control-label"></label>
+        <input asp-for="Season" class="form-control" />
+        <span asp-validation-for="Season" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="LogoPath" class="control-label">Logo</label>
+        <input type="file" name="logo" class="form-control" />
+        <span asp-validation-for="LogoPath" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>

@@ -1,0 +1,18 @@
+﻿@model FootballApiProject.Models.DTO_s.TeamsDto.TeamDetailsDto
+
+<h2>@Model.Name</h2>
+
+<div>
+    <img src="@Model.LogoPath" alt="Team Logo" width="150" />
+</div>
+<p><strong>Coach:</strong> @Model.Coach</p>
+<p><strong>Stadium:</strong> @Model.StadiumName</p>
+<p><strong>League:</strong> @Model.LeagueName</p>
+
+<h3>Players</h3>
+<ul>
+    @foreach (var player in Model.Players)
+    {
+        <li>@player.Name - @player.Position</li>
+    }
+</ul>

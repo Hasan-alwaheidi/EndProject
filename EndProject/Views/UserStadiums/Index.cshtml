@@ -1,0 +1,62 @@
+﻿
+@model IEnumerable<FootballApiProject.Models.DTO_s.StadiumsDto.StadiumDto>
+<html>
+<head>
+    <style>
+.card {
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-img {
+    max-width: 100%;
+    height: auto;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #fff;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+</style>
+</head>
+<body>
+<div class="container mt-5">
+    <div class="row">
+        @foreach (var stadium in Model)
+        {
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img src="@stadium.ImagePath" class="card-img" alt="@stadium.Name" />
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">@stadium.Name</h5>
+                                <p class="card-text"><strong>Location:</strong> @stadium.Location</p>
+                                <p class="card-text"><strong>Capacity:</strong> @stadium.Capacity</p>
+                                <a href="@Url.Action("Details", "UserStadiums", new { id = stadium.StadiumId })" class="btn btn-primary">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+</body>
+</html>

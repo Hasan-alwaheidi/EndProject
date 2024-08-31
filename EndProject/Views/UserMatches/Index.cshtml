@@ -1,0 +1,127 @@
+﻿@model EndProject.Models.MatchesViewModel
+
+<div class="container mt-3">
+    <h2 class="text-center">Matches</h2>
+
+    <!-- Navigation Bar for Matches -->
+    <div class="text-center mb-4">
+        <button class="btn btn-secondary mr-2" onclick="navigateCarousel(-1)">Previous</button>
+        <button class="btn btn-secondary" onclick="navigateCarousel(1)">Next</button>
+    </div>
+
+    <!-- Matches Carousel -->
+    <div id="matchesCarousel" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <h3>Today's Matches</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Home Team</th>
+                            <th>Away Team</th>
+                            <th>Date & Time</th>
+                            <th>Score</th>
+                            <th>Result</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var match in Model.TodayMatches)
+                        {
+                            <tr>
+                                <td>@match.HomeTeamName</td>
+                                <td>@match.AwayTeamName</td>
+                                <td>@match.Date.ToString("f")</td>
+                                <td>@match.Score ?? "N/A"</td>
+                                <td>@match.Result?.ToString() ?? "TBD"</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="carousel-item">
+                <h3>Tomorrow's Matches</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Home Team</th>
+                            <th>Away Team</th>
+                            <th>Date & Time</th>
+                            <th>Score</th>
+                            <th>Result</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var match in Model.TomorrowMatches)
+                        {
+                            <tr>
+                                <td>@match.HomeTeamName</td>
+                                <td>@match.AwayTeamName</td>
+                                <td>@match.Date.ToString("f")</td>
+                                <td>@match.Score ?? "N/A"</td>
+                                <td>@match.Result?.ToString() ?? "TBD"</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="carousel-item">
+                <h3>Upcoming Matches</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Home Team</th>
+                            <th>Away Team</th>
+                            <th>Date & Time</th>
+                            <th>Score</th>
+                            <th>Result</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var match in Model.UpcomingMatches)
+                        {
+                            <tr>
+                                <td>@match.HomeTeamName</td>
+                                <td>@match.AwayTeamName</td>
+                                <td>@match.Date.ToString("f")</td>
+                                <td>@match.Score ?? "N/A"</td>
+                                <td>@match.Result?.ToString() ?? "TBD"</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="carousel-item">
+                <h3>Old Matches</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Home Team</th>
+                            <th>Away Team</th>
+                            <th>Date & Time</th>
+                            <th>Score</th>
+                            <th>Result</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var match in Model.OldMatches)
+                        {
+                            <tr>
+                                <td>@match.HomeTeamName</td>
+                                <td>@match.AwayTeamName</td>
+                                <td>@match.Date.ToString("f")</td>
+                                <td>@match.Score ?? "N/A"</td>
+                                <td>@match.Result?.ToString() ?? "TBD"</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function navigateCarousel(direction) {
+        $('#matchesCarousel').carousel(direction === 1 ? 'next' : 'prev');
+    }
+</script>

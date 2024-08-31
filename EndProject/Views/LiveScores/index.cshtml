@@ -1,0 +1,33 @@
+﻿@model Newtonsoft.Json.Linq.JObject
+
+@{
+    ViewData["Title"] = "Live Scores";
+}
+
+<div class="container live-scores mt-3">
+    <h3>Live Scores</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Match</th>
+                <th>Score</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var match in Model["data"]["match"])
+            {
+                var homeTeam = match["home"]["name"];
+                var awayTeam = match["away"]["name"];
+                var score = match["scores"]?["score"]?.ToString() ?? "N/A"; 
+                var status = match["status"];
+
+                <tr>
+                    <td>@homeTeam vs @awayTeam</td>
+                    <td>@score</td>
+                    <td>@status</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

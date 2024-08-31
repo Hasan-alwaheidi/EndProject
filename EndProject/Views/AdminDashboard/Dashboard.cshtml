@@ -1,0 +1,89 @@
+﻿@model AdminDashboardViewModel
+
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center">Admin Dashboard</h2>
+
+    <div class="row mt-4">
+        <div class="col-md-4 mb-3">
+            <div class="card text-white bg-primary">
+                <div class="card-header">Manage Teams</div>
+                <div class="card-body">
+                    <h5 class="card-title">Teams</h5>
+                    <p class="card-text">Create, edit, delete, and view all teams.</p>
+                    <a href="@Url.Action("Index", "Teams")" class="btn btn-light btn-sm">Manage Teams</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card text-white bg-success">
+                <div class="card-header">Manage Players</div>
+                <div class="card-body">
+                    <h5 class="card-title">Players</h5>
+                    <p class="card-text">Create, edit, delete, and view all players.</p>
+                    <a href="@Url.Action("Index", "Players")" class="btn btn-light btn-sm">Manage Players</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card text-white bg-info">
+                <div class="card-header">Manage Matches</div>
+                <div class="card-body">
+                    <h5 class="card-title">Matches</h5>
+                    <p class="card-text">Create, edit, delete, and view all matches.</p>
+                    <a href="@Url.Action("Index", "Matches")" class="btn btn-light btn-sm">Manage Matches</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <!-- Manage News Section -->
+        <div class="col-md-4 mb-3">
+            <div class="card text-white bg-warning">
+                <div class="card-header">Manage News</div>
+                <div class="card-body">
+                    <h5 class="card-title">News</h5>
+                    <p class="card-text">Create, edit, delete, and view all news items.</p>
+                    <a href="@Url.Action("Index", "News")" class="btn btn-light btn-sm">Manage News</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card text-white bg-danger">
+                <div class="card-header">Manage Leagues</div>
+                <div class="card-body">
+                    <h5 class="card-title">Leagues</h5>
+                    <p class="card-text">Create, edit, delete, and view all leagues.</p>
+                    <a href="@Url.Action("Index", "Leagues")" class="btn btn-light btn-sm">Manage Leagues</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card text-white bg-dark">
+                <div class="card-header">Manage Stadiums</div>
+                <div class="card-body">
+                    <h5 class="card-title">Stadiums</h5>
+                    <p class="card-text">Create, edit, delete, and view all stadiums.</p>
+                    <a href="@Url.Action("Index", "Stadiums")" class="btn btn-light btn-sm">Manage Stadiums</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-4 mb-3">
+            <div class="card text-white bg-secondary">
+                <div class="card-header">Manage Slideshow</div>
+                <div class="card-body">
+                    <h5 class="card-title">Slideshow</h5>
+                    <p class="card-text">Add, edit, delete, and preview slideshow images.</p>
+                    <a href="@Url.Action("Manage", "Slideshow")" class="btn btn-light btn-sm">Manage Slideshow</a>
+                </div>
+            </div>
+        </div>
+        <!-- You can add more cards if there are additional sections to manage -->
+    </div>
+</div>

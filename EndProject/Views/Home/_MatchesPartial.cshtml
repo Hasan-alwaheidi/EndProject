@@ -1,0 +1,26 @@
+﻿@model IEnumerable<FootballApiProject.Models.DTO_s.MatchsDto.MatchDto>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Home Team</th>
+            <th>Away Team</th>
+            <th>Date & Time</th>
+            <th>Score</th>
+            <th>Result</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var match in Model)
+        {
+            <tr>
+                <td>@match.HomeTeamName</td>
+                <td>@match.AwayTeamName</td>
+                <td>@match.Date.ToString("f")</td>
+                <td>@match.Score ?? "N/A"</td>
+                <td>@match.Result?.ToString() ?? "TBD"</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

@@ -1,0 +1,24 @@
+﻿@model FootballApiProject.Models.DTO_s.MatchsDto.MatchDetailsDto
+
+<h2>Match Details</h2>
+
+<div>
+    <h4>Match</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Home Team</dt>
+        <dd class="col-sm-10">@Model.HomeTeamName</dd>
+        <dt class="col-sm-2">Away Team</dt>
+        <dd class="col-sm-10">@Model.AwayTeamName</dd>
+        <dt class="col-sm-2">Date & Time</dt>
+        <dd class="col-sm-10">@Model.Date.ToString("dd/MM/yyyy HH:mm")</dd> <!-- Display Date & Time -->
+        <dt class="col-sm-2">Score</dt>
+        <dd class="col-sm-10">@Model.Score</dd>
+        <dt class="col-sm-2">Result</dt>
+        <dd class="col-sm-10">@Model.Result</dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.MatchId" class="btn btn-primary">Edit</a>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>

@@ -1,0 +1,27 @@
+﻿@model IEnumerable<FootballApiProject.Models.DTO_s.PlayersDto.PlayerDto>
+
+<h2>Players</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Team</th>
+            <th>Nationality</th>
+            <th>Profile Picture</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var player in Model)
+        {
+            <tr>
+                <td>@Html.ActionLink(player.Name, "Details", new { id = player.PlayerId })</td>
+                <td>@player.Position</td>
+                <td>@player.TeamName</td>
+                <td>@player.Nationality</td>
+                <td><img src="@player.ProfilePicturePath" alt="Player Picture" width="100" /></td>
+            </tr>
+        }
+    </tbody>
+</table>

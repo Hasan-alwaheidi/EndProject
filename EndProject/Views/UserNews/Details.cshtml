@@ -1,0 +1,18 @@
+﻿@model SharedDtos.DTO_s.NewsDto.NewsDetailsDto
+
+@{
+    ViewData["Title"] = "News Details";
+}
+
+<h2>@Model.Title</h2>
+
+@if (!string.IsNullOrEmpty(Model.ImagePath))
+{
+    <img src="@Model.ImagePath" alt="@Model.Title" style="width: 100%; max-height: 400px; object-fit: cover;" class="mb-3" />
+}
+
+<p><strong>Published on:</strong> @Model.DatePublished.ToString("MMMM dd, yyyy")</p>
+
+<p>@Model.Content</p>
+
+<a href="@Url.Action("Index", "UserNews")" class="btn btn-secondary">Back to News</a>

@@ -1,0 +1,34 @@
+﻿@using System.IO
+@model IEnumerable<string>
+
+<h2>Manage Slideshow Images</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var imagePath in Model)
+        {
+            <tr>
+                <td>
+                    <img src="@imagePath" alt="Image" style="max-width: 150px;" />
+                </td>
+                <td>
+                    <a href="@imagePath" target="_blank" class="btn btn-info">Preview</a>
+                    <form asp-action="Delete" method="post" style="display:inline;">
+                        <input type="hidden" name="fileName" value="@System.IO.Path.GetFileName(imagePath)" />
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Upload" class="btn btn-primary">Upload New Image</a>
+<a asp-action="dashboard" asp-controller="AdminDashboard" class="btn btn-secondary">Back to Dashboard</a>

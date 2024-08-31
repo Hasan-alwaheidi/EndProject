@@ -1,0 +1,79 @@
+﻿@model HomeViewModel
+<div class="container mt-5">
+    <h2 class="text-center">Today's Matches</h2>
+    <div class="row">
+        <div class="col text-center">
+            <button id="todayMatchesBtn" class="btn btn-primary">Today</button>
+            <button id="upcomingMatchesBtn" class="btn btn-secondary">Upcoming</button>
+            <button id="pastMatchesBtn" class="btn btn-secondary">Past</button>
+        </div>
+    </div>
+    <div id="matchesContainer" class="mt-3">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Home Team</th>
+                    <th>Away Team</th>
+                    <th>Date & Time</th>
+                    <th>Score</th>
+                    <th>Result</th>
+                </tr>
+            </thead>
+            <tbody id="matchesTableBody">
+                @foreach (var match in Model.Matches)
+                {
+                    <tr>
+                        <td>@match.HomeTeamName</td>
+                        <td>@match.AwayTeamName</td>
+                        <td>@match.Date.ToString("f")</td>
+                        <td>@match.Score ?? "N/A"</td>
+                        <td>@match.Result?.ToString() ?? "TBD"</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById('todayMatchesBtn').addEventListener('click', function () {
+            // Filter and display today's matches
+            var allMatches = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Matches));
+            var today = new Date().toISOString().split('T')[0];
+            var todayMatches = allMatches.filter(match => match.Date.split('T')[0] === today);
+            updateMatchesTable(todayMatches);
+        });
+
+        document.getElementById('upcomingMatchesBtn').addEventListener('click', function () {
+            // Filter and display upcoming matches
+            var allMatches = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Matches));
+            var today = new Date();
+            var upcomingMatches = allMatches.filter(match => new Date(match.Date) > today);
+            updateMatchesTable(upcomingMatches);
+        });
+
+        document.getElementById('pastMatchesBtn').addEventListener('click', function () {
+            // Filter and display past matches
+            var allMatches = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Matches));
+            var today = new Date();
+            var pastMatches = allMatches.filter(match => new Date(match.Date) < today);
+            updateMatchesTable(pastMatches);
+        });
+
+        function updateMatchesTable(matches) {
+            var matchesTableBody = document.getElementById('matchesTableBody');
+            matchesTableBody.innerHTML = '';
+            matches.forEach(match => {
+                var row = `<tr>
+                            <td>${match.HomeTeamName}</td>
+                            <td>${match.AwayTeamName}</td>
+                            <td>${new Date(match.Date).toLocaleString()}</td>
+                            <td>${match.Score || 'N/A'}</td>
+                            <td>${match.Result || 'TBD'}</td>
+                        </tr>`;
+                matchesTableBody.insertAdjacentHTML('beforeend', row);
+            });
+        }
+    </script>
+}

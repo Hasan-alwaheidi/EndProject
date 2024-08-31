@@ -1,0 +1,36 @@
+﻿@model IEnumerable<FootballApiProject.Models.DTO_s.StadiumsDto.StadiumDto>
+
+<h2>Stadiums</h2>
+<div class="text-right mb-4">
+    <a href="@Url.Action("Dashboard", "AdminDashboard")" class="btn btn-secondary">Back to Dashboard</a>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Location</th>
+            <th>Capacity</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var stadium in Model)
+        {
+            <tr>
+                <td>
+                    <img src="@stadium.ImagePath" alt="@stadium.Name" style="width:100px;height:auto;" />
+                </td>
+                <td>@stadium.Name</td>
+                <td>@stadium.Location</td>
+                <td>@stadium.Capacity</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@stadium.StadiumId" class="btn btn-primary">Edit</a>
+                    <a asp-action="Details" asp-route-id="@stadium.StadiumId" class="btn btn-info">Details</a>
+                    <a asp-action="Delete" asp-route-id="@stadium.StadiumId" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a asp-action="Create" class="btn btn-success">Create New Stadium</a>

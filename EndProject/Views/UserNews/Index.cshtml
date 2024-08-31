@@ -1,0 +1,26 @@
+﻿@model IEnumerable<SharedDtos.DTO_s.NewsDto.NewsDetailsDto>
+
+@{
+    ViewData["Title"] = "News";
+}
+
+<h2>News</h2>
+
+<div class="row">
+    @foreach (var newsItem in Model)
+    {
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                @if (!string.IsNullOrEmpty(newsItem.ImagePath))
+                {
+                    <img class="card-img-top" src="@newsItem.ImagePath" alt="@newsItem.Title" style="height: 200px; object-fit: cover;" />
+                }
+                <div class="card-body">
+                    <h5 class="card-title">@newsItem.Title</h5>
+                    <p class="card-text">@newsItem.Content.Substring(0, Math.Min(newsItem.Content.Length, 100))...</p>
+                    <a href="@Url.Action("Details", "UserNews", new { id = newsItem.Id })" class="btn btn-primary">Read More</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

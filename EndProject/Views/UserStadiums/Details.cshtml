@@ -1,0 +1,26 @@
+﻿@model FootballApiProject.Models.DTO_s.StadiumsDto.StadiumDetailsDto
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="row no-gutters">
+            <div class="col-md-4">
+                <img src="@Model.ImagePath" class="card-img" alt="@Model.Name" />
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">@Model.Name</h5>
+                    <p class="card-text"><strong>Location:</strong> @Model.Location</p>
+                    <p class="card-text"><strong>Capacity:</strong> @Model.Capacity</p>
+                    <h6>Teams:</h6>
+                    <ul>
+                        @foreach (var team in Model.Teams)
+                        {
+                            <li>@team.Name - Coach: @team.Coach</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="@Url.Action("Index", "UserStadiums")" class="btn btn-secondary mt-3">Back to List</a>
+</div>

@@ -1,0 +1,32 @@
+﻿
+@using SharedDtos.DTO_s.NewsDto
+@model IEnumerable<NewsDtoo>
+
+<h2>News</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Content</th>
+            <th>Date Published</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Title</td>
+                <td>@item.Content</td>
+                <td>@item.DatePublished.ToString("g")</td>
+                <td>
+                    <a href="@Url.Action("Edit", new { id = item.Id })" class="btn btn-primary">Edit</a>
+                    <a href="@Url.Action("Details", new { id = item.Id })" class="btn btn-info">Details</a>
+                    <a href="@Url.Action("Delete", new { id = item.Id })" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a href="@Url.Action("Create")" class="btn btn-success">Create New</a>
