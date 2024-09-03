@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EndProject", "EndProject\EndProject.csproj", "{75328E18-9151-4F18-B4A6-B51303DC80C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EndProject", "EndProject\EndProject.csproj", "{75328E18-9151-4F18-B4A6-B51303DC80C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassGenerate", "PassGenerate\PassGenerate.csproj", "{505C6F5F-C008-481F-8FF6-56AEC6710C67}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{75328E18-9151-4F18-B4A6-B51303DC80C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75328E18-9151-4F18-B4A6-B51303DC80C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75328E18-9151-4F18-B4A6-B51303DC80C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{505C6F5F-C008-481F-8FF6-56AEC6710C67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{505C6F5F-C008-481F-8FF6-56AEC6710C67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{505C6F5F-C008-481F-8FF6-56AEC6710C67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{505C6F5F-C008-481F-8FF6-56AEC6710C67}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

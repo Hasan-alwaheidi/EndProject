@@ -1,25 +1,57 @@
 ﻿@model IEnumerable<FootballApiProject.Models.DTO_s.LeaguesDto.LeagueDto>
 
-<h2>Leagues</h2>
+<style>
+    .league-card {
+        background: #f9f9f9;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+    }
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Country</th>
-            <th>Season</th>
-            <th>Logo</th>
-        </tr>
-    </thead>
-    <tbody>
+        .league-card:hover {
+            transform: translateY(-5px);
+        }
+
+    .league-logo {
+        width: 60px;
+        height: 60px;
+        margin-right: 15px;
+    }
+
+    .league-info {
+        display: flex;
+        align-items: center;
+    }
+
+    .league-details {
+        margin-top: 10px;
+    }
+</style>
+
+<h2 class="text-center my-4">Leagues</h2>
+
+<div class="container">
+    <div class="row">
         @foreach (var league in Model)
         {
-            <tr>
-                <td>@Html.ActionLink(league.Name, "Details", new { id = league.LeagueId })</td>
-                <td>@league.Country</td>
-                <td>@league.Season</td>
-                <td><img src="@league.LogoPath" alt="League Logo" width="100" /></td>
-            </tr>
+            <div class="col-md-4">
+                <div class="league-card">
+                    <div class="league-info">
+                        <img src="@league.LogoPath" alt="League Logo" class="league-logo">
+                        <div>
+                            <h5>@league.Name</h5>
+                            <p>@league.Country</p>
+                        </div>
+                    </div>
+                    <div class="league-details">
+                        <p>@league.Season</p>
+                        <p>@league.Description</p>
+                        <a href="@Url.Action("Details", new { id = league.LeagueId })" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
         }
-    </tbody>
-</table>
+    </div>
+</div>

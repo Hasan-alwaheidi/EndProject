@@ -2,43 +2,49 @@
 using EndProject.Services;
 using Microsoft.AspNetCore.Mvc;
 using SharedDtos.DTO_s.NewsDto;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 
 public class AdminDashboardController : Controller
 {
     private readonly INewsService _newsService;
-
-    public AdminDashboardController(INewsService newsService)
+    private readonly IConfiguration _configuration;
+    public AdminDashboardController(INewsService newsService, IConfiguration configuration)
     {
         _newsService = newsService;
+       _configuration = configuration;
     }
 
     public IActionResult Login()
     {
         return View();
     }
-
     [HttpPost]
     public IActionResult Login(string password)
     {
-        if (!string.IsNullOrEmpty(password))
-        {
-            return RedirectToAction("Dashboard");
-        }
-        else
+        if (string.IsNullOrEmpty(password))
         {
             ViewBag.Error = "Password is required.";
             return View();
         }
-    }
 
+        var storedHashedPassword = _configuration["AdminPasswordHash"];
+        var isPasswordValid = BCrypt.Net.BCrypt.Verify(password, storedHashedPassword);
+
+        if (isPasswordValid)
+        {
+            HttpContext.Session.SetString("AdminAuthenticated", "true");
+            return RedirectToAction("Dashboard");
+        }
+        else
+        {
+            ViewBag.Error = "Invalid password.";
+            return View();
+        }
+    }
     public async Task<IActionResult> Dashboard()
     {
         var newsItems = await _newsService.GetNewsItemsAsync();
-
         var newsDetails = newsItems.Select(newsItem => new NewsDtoo
         {
             Id = newsItem.Id,
@@ -55,14 +61,11 @@ public class AdminDashboardController : Controller
 
         return View(model);
     }
-
-    // GET: AdminDashboard/Create
     public IActionResult Create()
     {
         return View(new CreateNewsViewModel());
     }
 
-    // POST: AdminDashboard/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(CreateNewsViewModel viewModel)
@@ -73,7 +76,7 @@ public class AdminDashboardController : Controller
             {
                 Title = viewModel.Title,
                 Content = viewModel.Content,
-                ImagePath = await SaveImageAsync(viewModel.Image) // Saving the image and returning the path
+                ImagePath = await SaveImageAsync(viewModel.Image) 
             };
 
             var success = await _newsService.CreateNewsItemAsync(createNewsDto);
@@ -126,7 +129,6 @@ public class AdminDashboardController : Controller
                 ImagePath = string.IsNullOrEmpty(viewModel.ImagePath) ? await SaveImageAsync(viewModel.Image) : viewModel.ImagePath
             };
 
-            // Assuming UpdateNewsItemAsync method signature is Task<bool> UpdateNewsItemAsync(int id, UpdateNewsDto updateNewsDto)
             var success = await _newsService.UpdateNewsItemAsync(id, updateNewsDto);
             if (success)
             {
@@ -137,7 +139,6 @@ public class AdminDashboardController : Controller
         return View(viewModel);
     }
 
-    // GET: AdminDashboard/Delete/5
     public async Task<IActionResult> Delete(int id)
     {
         var newsItem = await _newsService.GetNewsItemByIdAsync(id);
@@ -146,11 +147,9 @@ public class AdminDashboardController : Controller
             return NotFound();
         }
 
-        // Directly use the NewsDetailsDto returned by the service
         return View(newsItem);
     }
 
-    // POST: AdminDashboard/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
@@ -168,7 +167,7 @@ public class AdminDashboardController : Controller
     {
         if (image == null || image.Length == 0)
         {
-            return "/images/Default.jpg"; // Return a default image path if no image is uploaded
+            return "/images/Default.jpg";
         }
 
         string uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "newsimages");

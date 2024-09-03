@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using System;
 using EndProject.Models;
 
 public class SlideshowController : Controller
@@ -26,7 +28,10 @@ public class SlideshowController : Controller
         {
             if (model.ImageFile != null && model.ImageFile.Length > 0)
             {
-                var uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "images/");
+                // Ensure the images are saved in the slideshow folder
+                var uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath,"images" ,"Slideshow");
+                Directory.CreateDirectory(uploadsFolder); // Ensure the directory exists
+
                 var uniqueFileName = Guid.NewGuid().ToString() + "_" + model.ImageFile.FileName;
                 var filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
@@ -44,9 +49,10 @@ public class SlideshowController : Controller
 
     public IActionResult Manage()
     {
-        var imageFolder = Path.Combine(_hostingEnvironment.WebRootPath, "images");
+        // Get images from the slideshow folder
+        var imageFolder = Path.Combine(_hostingEnvironment.WebRootPath,"images","Slideshow");
         var imagePaths = Directory.GetFiles(imageFolder)
-                                  .Select(f => "/images/slideshow/" + Path.GetFileName(f))
+                                  .Select(f => "/images/Slideshow/" + Path.GetFileName(f))
                                   .ToList();
 
         return View(imagePaths);
@@ -60,7 +66,7 @@ public class SlideshowController : Controller
             return NotFound();
         }
 
-        var imagePath = Path.Combine(_hostingEnvironment.WebRootPath, "images", fileName);
+        var imagePath = Path.Combine(_hostingEnvironment.WebRootPath,"images","Slideshow", fileName);
         if (System.IO.File.Exists(imagePath))
         {
             System.IO.File.Delete(imagePath);

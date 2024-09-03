@@ -27,7 +27,12 @@ namespace EndProject.Services
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadFromJsonAsync<PlayerDto>();
         }
-
+        public async Task<PlayerDetailsDto> GetPlayerDetailsAsync(int id)
+        {
+            var response = await _httpClient.GetAsync($"PlayersApi/{id}");
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadFromJsonAsync<PlayerDetailsDto>();
+        }
         public async Task<bool> CreatePlayerAsync(CreatePlayerDto createPlayerDto)
         {
             var response = await _httpClient.PostAsJsonAsync("PlayersApi", createPlayerDto);

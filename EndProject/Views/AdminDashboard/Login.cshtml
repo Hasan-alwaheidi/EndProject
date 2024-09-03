@@ -1,12 +1,39 @@
-﻿@if (ViewBag.Error != null)
-{
-    <div class="alert alert-danger">@ViewBag.Error</div>
+﻿@{
+    ViewData["Title"] = "Admin Login";
 }
 
-<form method="post" action="/AdminDashboard/Login">
-    <div class="form-group">
-        <label for="adminPassword">Password</label>
-        <input type="password" class="form-control" id="adminPassword" name="password" placeholder="Enter password">
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h3>Admin Login</h3>
+                </div>
+                <div class="card-body">
+                    @if (ViewBag.Error != null)
+                    {
+                            <div class="alert alert-danger">
+                                <strong>Error:</strong> @ViewBag.Error
+                            </div>
+                    }
+                    <form method="post" asp-action="Login" class="mt-4">
+                        <div class="form-group">
+                            <label for="adminPassword">Password</label>
+                            <input type="password" class="form-control @(ViewBag.Error != null ? "is-invalid" : "")" id="adminPassword" name="password" placeholder="Enter password" required>
+                            <small id="passwordHelpBlock" class="form-text text-muted">
+                                Please enter your administrator password to access the dashboard.
+                            </small>
+                            @if (ViewBag.Error != null)
+                            {
+                                    <div class="invalid-feedback">
+                                    @ViewBag.Error
+                                    </div>
+                            }
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    <button type="submit" class="btn btn-primary">Login</button>
-</form>
+</div>

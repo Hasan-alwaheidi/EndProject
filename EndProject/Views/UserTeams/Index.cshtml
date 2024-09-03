@@ -1,28 +1,61 @@
 ﻿@using FootballApiProject.Models.DTO_s
 @model IEnumerable<TeamDto>
 
-<h2>Teams</h2>
+<style>
+    .border-darkblue {
+        border: 2px solid darkblue; 
+    }
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Coach</th>
-            <th>Stadium</th>
-            <th>League</th>
-            <th>Logo</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var team in Model)
-        {
-            <tr>
-                <td>@Html.ActionLink(team.Name, "Details", new { id = team.TeamId })</td>
-                <td>@team.Coach</td>
-                <td>@team.StadiumName</td>
-                <td>@team.LeagueName</td>
-                <td><img src="@team.LogoPath" alt="Team Logo" width="100" /></td>
-            </tr>
+    .hover-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .hover-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
-    </tbody>
-</table>
+
+    .card-img-top-wrapper {
+        background-color: white;
+        padding: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .card-img-top {
+        transition: transform 0.3s ease;
+    }
+
+    .hover-card:hover .card-img-top {
+        transform: scale(1.1);
+    }
+
+    .card-footer a {
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+</style>
+<h2 class="text-center mb-5">Teams</h2>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    @foreach (var team in Model)
+    {
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 hover-card">
+                <div class="card-img-top-wrapper position-relative overflow-hidden">
+                    <img src="@team.LogoPath" class="card-img-top img-fluid" alt="Team Logo" style="max-height: 200px; object-fit: contain; padding: 20px; background-color: #f8f9fa;" />
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title text-center">@team.Name</h5>
+                    <p class="card-text"><strong>Coach:</strong> @team.Coach</p>
+                    <p class="card-text"><strong>Stadium:</strong> @team.StadiumName</p>
+                    <p class="card-text"><strong>League:</strong> @team.LeagueName</p>
+                </div>
+                <div class="card-footer text-center bg-transparent border-0">
+                    <a href="@Url.Action("Details","UserTeams", new { id = team.TeamId })" class="btn btn-outline-primary btn-sm">Read More</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

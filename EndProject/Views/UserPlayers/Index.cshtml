@@ -1,27 +1,91 @@
 ﻿@model IEnumerable<FootballApiProject.Models.DTO_s.PlayersDto.PlayerDto>
 
-<h2>Players</h2>
+<style>
+    .player-card {
+        background: #fff;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        position: relative;
+        height: 450px; 
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Position</th>
-            <th>Team</th>
-            <th>Nationality</th>
-            <th>Profile Picture</th>
-        </tr>
-    </thead>
-    <tbody>
+        .player-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+    .player-image img {
+        width: 100%;
+        height: 250px;
+       
+        object-fit: contain; /* Ensures the image covers the area while maintaining aspect ratio */
+        border-bottom: 2px solid #f8f8f8;
+        border-radius: 15px 15px 0 0;
+    }
+
+    .player-info {
+        padding: 15px;
+        text-align: center;
+    }
+
+        .player-info h5 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .player-info p {
+            color: #777;
+            margin-bottom: 0.5rem;
+        }
+
+    .details-button {
+        display: inline-block;
+        margin-top: auto;
+        padding: 8px 15px;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: #fff;
+        text-decoration: none;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+        .details-button:hover {
+            background-color: #0056b3;
+        }
+
+        .details-button i {
+            margin-right: 5px;
+        }
+</style>
+
+<h2 class="text-center my-4">Players</h2>
+
+<div class="container">
+    <div class="row">
         @foreach (var player in Model)
         {
-            <tr>
-                <td>@Html.ActionLink(player.Name, "Details", new { id = player.PlayerId })</td>
-                <td>@player.Position</td>
-                <td>@player.TeamName</td>
-                <td>@player.Nationality</td>
-                <td><img src="@player.ProfilePicturePath" alt="Player Picture" width="100" /></td>
-            </tr>
+            <div class="col-md-4 mb-4 d-flex align-items-stretch">
+                <div class="player-card">
+                    <div class="player-image">
+                        <img src="@player.ProfilePicturePath" alt="Player Picture" class="img-fluid" />
+                    </div>
+                    <div class="player-info">
+                        <h5>@player.Name</h5>
+                        <p>@player.Position</p>
+                        <p>@player.TeamName</p>
+                        <p>@player.Nationality</p>
+                        <a href="@Url.Action("Details","UserPlayers", new { id = player.PlayerId })" class="details-button">
+                            <i class="fas fa-plus"></i> Read More
+                        </a>
+                    </div>
+                </div>
+            </div>
         }
-    </tbody>
-</table>
+    </div>
+</div>

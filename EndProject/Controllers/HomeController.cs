@@ -33,9 +33,10 @@ public class HomeController : Controller
         }
 
         _logger.LogInformation("Fetching slideshow images.");
-        var imageFolder = Path.Combine(_hostingEnvironment.WebRootPath, "images");
+        // Update the path to point to the slideshow folder
+        var imageFolder = Path.Combine(_hostingEnvironment.WebRootPath, "images", "slideshow");
         var imagePaths = Directory.GetFiles(imageFolder)
-                                  .Select(f => "/images/" + Path.GetFileName(f))
+                                  .Select(f => "/images/slideshow/" + Path.GetFileName(f))
                                   .ToList();
 
         _logger.LogInformation("Fetching news for the home page.");
@@ -62,15 +63,14 @@ public class HomeController : Controller
 
         // Define competition priorities
         var prioritizedCompetitions = new List<string>
-        {
-            "LaLiga Santander",
-            "Premier League",
-            "Bundesliga",
-            "Ligue 1",
-            "Champions League",
-            "Serie A"
-
-        };
+    {
+        "LaLiga Santander",
+        "Premier League",
+        "Bundesliga",
+        "Ligue 1",
+        "Champions League",
+        "Serie A"
+    };
 
         // Sort live scores based on competition priority and status (live matches on top)
         var sortedLiveScores = liveScoresArray
@@ -94,4 +94,5 @@ public class HomeController : Controller
         _logger.LogInformation("Successfully fetched matches, slideshow images, and news items.");
         return View(model);
     }
+
 }

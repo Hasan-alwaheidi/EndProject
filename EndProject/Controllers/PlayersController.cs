@@ -28,16 +28,13 @@ public class PlayersController : Controller
     // GET: Create
     public async Task<IActionResult> Create()
     {
-        // Assuming you have services for fetching teams
         var teams = await _teamService.GetTeamsAsync();
 
-        // Populate ViewBag with teams and positions
         ViewBag.Teams = new SelectList(teams, "TeamId", "Name");
         ViewBag.Positions = Enum.GetValues(typeof(PlayerPosition)).Cast<PlayerPosition>().ToList();
 
         return View();
     }
-
 
     [HttpPost]
     [ValidateAntiForgeryToken]
@@ -84,17 +81,16 @@ public class PlayersController : Controller
             Position = player.Position,
             Nationality = player.Nationality,
             TeamId = player.TeamId,
-            ProfilePicturePath = player.ProfilePicturePath 
+            ProfilePicturePath = player.ProfilePicturePath,
+            Description = player.Description 
         };
 
-        // Populate ViewBag with teams and positions
         var teams = await _teamService.GetTeamsAsync();
         ViewBag.Teams = new SelectList(teams, "TeamId", "Name");
         ViewBag.Positions = Enum.GetValues(typeof(PlayerPosition)).Cast<PlayerPosition>().ToList();
 
         return View(updatePlayerDto);
     }
-
 
     [HttpPost]
     public async Task<IActionResult> Edit(int id, UpdatePlayerDto updatePlayerDto, IFormFile profilePicture)
@@ -147,7 +143,8 @@ public class PlayersController : Controller
             Position = player.Position,
             Nationality = player.Nationality,
             TeamName = player.TeamName,
-            ProfilePicturePath = player.ProfilePicturePath
+            ProfilePicturePath = player.ProfilePicturePath,
+            Description = player.Description 
         };
 
         return View(playerDetails);
@@ -166,7 +163,8 @@ public class PlayersController : Controller
             Position = player.Position,
             Nationality = player.Nationality,
             TeamName = player.TeamName,
-            ProfilePicturePath = player.ProfilePicturePath
+            ProfilePicturePath = player.ProfilePicturePath,
+            Description = player.Description 
         };
 
         return View(playerDetails);

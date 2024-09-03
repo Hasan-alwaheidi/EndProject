@@ -1,5 +1,6 @@
 ﻿using EndProject.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace EndProject.Controllers.UserControllers
 {
@@ -20,12 +21,14 @@ namespace EndProject.Controllers.UserControllers
 
         public async Task<IActionResult> Details(int id)
         {
-            var player = await _playerService.GetPlayerByIdAsync(id);
-            if (player == null)
+            var playerDetails = await _playerService.GetPlayerByIdAsync(id);
+            if (playerDetails == null)
             {
                 return NotFound();
             }
-            return View(player);
+            return View(playerDetails);
         }
+
+
     }
 }

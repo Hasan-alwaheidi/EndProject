@@ -1,17 +1,56 @@
 ﻿@model FootballApiProject.Models.DTO_s.LeaguesDto.LeagueDetailsDto
 
-<h2>@Model.Name</h2>
-
-<div>
-    <img src="@Model.LogoPath" alt="League Logo" width="150" />
-</div>
-<p><strong>Country:</strong> @Model.Country</p>
-<p><strong>Season:</strong> @Model.Season</p>
-
-<h3>Teams</h3>
-<ul>
-    @foreach (var team in Model.Teams)
-    {
-        <li>@team.Name - @team.Coach</li>
+<style>
+    .details-container {
+        background: #fff;
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
     }
-</ul>
+
+    .league-logo {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 20px;
+    }
+
+    .league-header {
+        display: flex;
+        align-items: center;
+    }
+
+        .league-header h2 {
+            margin-left: 20px;
+        }
+
+    .description {
+        margin-top: 20px;
+    }
+</style>
+
+<div class="container">
+    <div class="details-container">
+        <div class="league-header">
+            <img src="@Model.LogoPath" alt="League Logo" class="league-logo">
+            <h2>@Model.Name</h2>
+        </div>
+        <p><strong>Country:</strong> @Model.Country</p>
+        <p><strong>Season:</strong> @Model.Season</p>
+
+        <div class="description">
+            <h4>Description</h4>
+            <p>@Model.Description</p>
+        </div>
+
+        <h4>Teams</h4>
+        <ul>
+            @foreach (var team in Model.Teams)
+            {
+                <li>@team.Name</li>
+            }
+        </ul>
+
+        <a href="@Url.Action("Index")" class="btn btn-secondary mt-3">Back to Leagues</a>
+    </div>
+</div>

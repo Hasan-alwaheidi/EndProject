@@ -1,4 +1,4 @@
-﻿@model FootballApiProject.Models.DTO_s.TeamsDto.TeamDetailsDto
+﻿@model FootballApiProject.Models.DTO_s.TeamDto
 
 <h2>@Model.Name</h2>
 
@@ -8,11 +8,5 @@
 <p><strong>Coach:</strong> @Model.Coach</p>
 <p><strong>Stadium:</strong> @Model.StadiumName</p>
 <p><strong>League:</strong> @Model.LeagueName</p>
+<p><strong>Bio:</strong>@Model.Description</p>
 
-<h3>Players</h3>
-<ul>
-    @foreach (var player in Model.Players)
-    {
-        <li>@player.Name - @player.Position</li>
-    }
-</ul>
