@@ -2,25 +2,111 @@
 
 @{
     ViewData["Title"] = "News";
+    var latestNews = Model.FirstOrDefault();
+    var otherNews = Model.Skip(1);
 }
 
-<h2>News</h2>
+<!-- Import a stylish font from Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+
+<style>
+    /* Styling for the advanced fonts */
+    .heading-font {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        color: #003366;
+    }
+
+    /* Styling for the Latest News card */
+    .latest-news-card {
+        box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+
+    /* Styling for More News section */
+    .more-news-list .list-group-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px;
+        border: none;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .more-news-list img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 5px;
+        margin-right: 15px;
+    }
+
+    .more-news-content {
+        flex: 1;
+    }
+
+    .more-news-title {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        font-size: 16px;
+        color: #333;
+    }
+
+    .more-news-time {
+        font-size: 14px;
+        color: #777;
+    }
+
+    /* Styling for the "Read More" button */
+    .btn-read-more {
+        background-color: #ff3b3b;
+        color: white;
+        padding: 5px 10px;
+        font-size: 14px;
+        border-radius: 5px;
+    }
+
+    /* Ensure images and content align nicely in More News section */
+    .list-group-item:hover {
+        background-color: #f9f9f9;
+    }
+</style>
+
+<h2 class="text-center mb-4 heading-font">Latest News</h2>
 
 <div class="row">
-    @foreach (var newsItem in Model)
-    {
-        <div class="col-md-4">
-            <div class="card mb-4 shadow-sm">
-                @if (!string.IsNullOrEmpty(newsItem.ImagePath))
+    <!-- Main News Section (Latest News) -->
+    <div class="col-md-8">
+        @if (latestNews != null)
+        {
+            <div class="card mb-4 shadow-lg latest-news-card">
+                @if (!string.IsNullOrEmpty(latestNews.ImagePath))
                 {
-                    <img class="card-img-top" src="@newsItem.ImagePath" alt="@newsItem.Title" style="height: 200px; object-fit: cover;" />
+                    <img class="card-img-top" src="@latestNews.ImagePath" alt="@latestNews.Title" style="height: 400px; object-fit: cover;" />
                 }
                 <div class="card-body">
-                    <h5 class="card-title">@newsItem.Title</h5>
-                    <p class="card-text">@newsItem.Content.Substring(0, Math.Min(newsItem.Content.Length, 100))...</p>
-                    <a href="@Url.Action("Details", "UserNews", new { id = newsItem.Id })" class="btn btn-primary">Read More</a>
+                    <h3 class="card-title heading-font">@latestNews.Title</h3>
+                    <p class="card-text">@latestNews.Content.Substring(0, Math.Min(latestNews.Content.Length, 200))...</p>
+                    <a href="@Url.Action("Details", "UserNews", new { id = latestNews.Id })" class="btn btn-danger">Read More</a>
                 </div>
             </div>
-        </div>
-    }
+        }
+    </div>
+
+    <!-- Side News List with Images -->
+    <div class="col-md-4">
+        <h4 class="mb-3 heading-font">More News</h4>
+        <ul class="list-group more-news-list">
+            @foreach (var newsItem in otherNews)
+            {
+                <li class="list-group-item">
+                    <img src="@newsItem.ImagePath" alt="@newsItem.Title" />
+                    <div class="more-news-content">
+                        <div class="more-news-title">@newsItem.Title</div>
+                    </div>
+                    <a href="@Url.Action("Details", "UserNews", new { id = newsItem.Id })" class="btn btn-read-more">Read More</a>
+                </li>
+            }
+        </ul>
+    </div>
 </div>

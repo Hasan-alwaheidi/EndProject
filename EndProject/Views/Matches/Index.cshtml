@@ -5,7 +5,7 @@
     <a href="@Url.Action("Dashboard", "AdminDashboard")" class="btn btn-secondary">Back to Dashboard</a>
 </div>
 <p>
-    <a asp-action="Create" class="btn btn-primary">Create New League</a>
+    <a asp-action="Create" class="btn btn-primary">Add New Match</a>
 </p>
 <table class="table">
     <thead>
@@ -24,7 +24,7 @@
             <tr>
                 <td>@match.HomeTeamName</td>
                 <td>@match.AwayTeamName</td>
-                <td>@match.Date.ToString("dd/MM/yyyy HH:mm")</td> <!-- Display Date & Time -->
+                <td>@match.Date.ToString("dd/MM/yyyy HH:mm")</td> 
                 <td>@match.Score</td>
                 <td>@match.Result</td>
                 <td>

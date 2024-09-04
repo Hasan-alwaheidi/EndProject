@@ -46,8 +46,6 @@ public class HomeController : Controller
             _logger.LogWarning("No news items found.");
             newsItems = new List<NewsDtoo>();
         }
-
-        // Map NewsDtoo to NewsDetailsDto
         var newsDetailsItems = newsItems.Select(news => new NewsDetailsDto
         {
             Id = news.Id,
@@ -57,11 +55,8 @@ public class HomeController : Controller
             ImagePath = news.ImagePath
         }).ToList();
 
-        // Fetch live scores
         JObject liveScores = await _liveScoreService.GetLiveScoresAsync();
         JArray liveScoresArray = liveScores["data"]?["match"] as JArray ?? new JArray();
-
-        // Define competition priorities
         var prioritizedCompetitions = new List<string>
     {
         "LaLiga Santander",

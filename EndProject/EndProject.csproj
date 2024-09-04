@@ -29,7 +29,6 @@
   <ItemGroup>
     <Folder Include="wwwroot\images\leagues\" />
     <Folder Include="wwwroot\images\Slideshow\" />
-    <Folder Include="wwwroot\images\stadiums\" />
     <Folder Include="wwwroot\newsImages\" />
     <Folder Include="wwwroot\uploads\" />
   </ItemGroup>

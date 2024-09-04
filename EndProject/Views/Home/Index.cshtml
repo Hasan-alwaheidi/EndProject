@@ -1,79 +1,125 @@
 ﻿@model HomeViewModel
+<link href="https://fonts.googleapis.com/css2?family=Lacquer&display=swap" rel="stylesheet">
+
+<style>
+    /* Match cards layout */
+    .carousel2-inner {
+        display: flex;
+        justify-content: center;
+    }
+
+    .carousel2-item {
+        display: flex;
+        justify-content: center;
+    }
+
+    .match-card {
+        width: 300px;
+        height: 200px;
+        background-image: url('/path-to-your-background-image.jpg'); /* Add your image path */
+        background-size: cover;
+        background-position: center;
+        background-color: darkblue; /* Fallback color */
+        color: #ffffff; /* Ensure text is white for contrast */
+        border: 2px solid #003366;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 10px;
+        box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease-in-out;
+        text-align: center;
+    }
+
+        .match-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+    .team2-name {
+        font-size: 18px;
+        font-weight: bold;
+        color: #ffffff; /* Ensure text is white for readability */
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Optional text shadow for better contrast */
+    }
+
+    .vs-text {
+        font-size: 32px;
+        font-weight: bold;
+        color: #ff3b3b;
+        margin: 10px 0;
+        font-family: "Lacquer", system-ui;
+    }
+
+    .match-time {
+        font-size: 14px;
+        color: #ffffff; /* White for visibility */
+    }
+
+    /* Carousel control styling */
+    .carousel2-control-prev-icon,
+    .carousel2-control-next-icon {
+        background-color: #003366;
+        border-radius: 50%;
+        padding: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .carousel2-indicators {
+        bottom: -40px;
+    }
+</style>
+
 <div class="container mt-5">
-    <h2 class="text-center">Today's Matches</h2>
-    <div class="row">
-        <div class="col text-center">
-            <button id="todayMatchesBtn" class="btn btn-primary">Today</button>
-            <button id="upcomingMatchesBtn" class="btn btn-secondary">Upcoming</button>
-            <button id="pastMatchesBtn" class="btn btn-secondary">Past</button>
+    <h2 class="text-center mb-4">Upcoming Matches</h2>
+
+    <div id="matchCarousel" class="carousel slide" data-ride="carousel2">
+        <!-- Carousel Indicators -->
+        <ol class="carousel-indicators">
+            @for (int i = 0; i < Model.Matches.Where(m => m.Date > DateTime.Now).Count(); i += 3)
+            {
+                <li data-target="#matchCarousel" data-slide-to="@i" class="@(i == 0 ? "active" : "")"></li>
+            }
+        </ol>
+
+        <!-- Carousel Items -->
+        <div class="carousel-inner">
+            @for (int i = 0; i < Model.Matches.Where(m => m.Date > DateTime.Now).Count(); i += 3)
+            {
+                <div class="carousel-item @(i == 0 ? "active" : "")">
+                    <div class="row justify-content-center">
+                        @foreach (var match in Model.Matches.Where(m => m.Date > DateTime.Now).Skip(i).Take(3))
+                        {
+                            <div class="col-md-4 d-flex justify-content-center">
+                                <div class="match-card">
+                                    <div class="team2-name">@match.HomeTeamName</div>
+                                    <div class="vs-text">VS</div>
+                                    <div class="team2-name">@match.AwayTeamName</div>
+                                    <div class="match-time">@match.Date.ToString("f")</div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
         </div>
-    </div>
-    <div id="matchesContainer" class="mt-3">
-        <table class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>Home Team</th>
-                    <th>Away Team</th>
-                    <th>Date & Time</th>
-                    <th>Score</th>
-                    <th>Result</th>
-                </tr>
-            </thead>
-            <tbody id="matchesTableBody">
-                @foreach (var match in Model.Matches)
-                {
-                    <tr>
-                        <td>@match.HomeTeamName</td>
-                        <td>@match.AwayTeamName</td>
-                        <td>@match.Date.ToString("f")</td>
-                        <td>@match.Score ?? "N/A"</td>
-                        <td>@match.Result?.ToString() ?? "TBD"</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+
+        <!-- Carousel Controls -->
+        <a class="carousel-control-prev" href="#matchCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#matchCarousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
     </div>
 </div>
 
 @section Scripts {
     <script>
-        document.getElementById('todayMatchesBtn').addEventListener('click', function () {
-            // Filter and display today's matches
-            var allMatches = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Matches));
-            var today = new Date().toISOString().split('T')[0];
-            var todayMatches = allMatches.filter(match => match.Date.split('T')[0] === today);
-            updateMatchesTable(todayMatches);
+        // Initialize Bootstrap carousel
+        $('#matchCarousel').carousel({
+            interval: false // Disable auto-slide, users can manually navigate
         });
-
-        document.getElementById('upcomingMatchesBtn').addEventListener('click', function () {
-            // Filter and display upcoming matches
-            var allMatches = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Matches));
-            var today = new Date();
-            var upcomingMatches = allMatches.filter(match => new Date(match.Date) > today);
-            updateMatchesTable(upcomingMatches);
-        });
-
-        document.getElementById('pastMatchesBtn').addEventListener('click', function () {
-            // Filter and display past matches
-            var allMatches = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Matches));
-            var today = new Date();
-            var pastMatches = allMatches.filter(match => new Date(match.Date) < today);
-            updateMatchesTable(pastMatches);
-        });
-
-        function updateMatchesTable(matches) {
-            var matchesTableBody = document.getElementById('matchesTableBody');
-            matchesTableBody.innerHTML = '';
-            matches.forEach(match => {
-                var row = `<tr>
-                            <td>${match.HomeTeamName}</td>
-                            <td>${match.AwayTeamName}</td>
-                            <td>${new Date(match.Date).toLocaleString()}</td>
-                            <td>${match.Score || 'N/A'}</td>
-                            <td>${match.Result || 'TBD'}</td>
-                        </tr>`;
-                matchesTableBody.insertAdjacentHTML('beforeend', row);
-            });
-        }
     </script>
 }

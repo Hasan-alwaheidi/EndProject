@@ -1,4 +1,4 @@
-﻿@using EndProject.Models
+﻿﻿@using EndProject.Models
 @model object
 
 @{
@@ -63,7 +63,11 @@
                 <marquee behavior="scroll" direction="left">
                     @foreach (var newsItem in homeViewModel.NewsItems)
                     {
-                        <span>@newsItem.Title | </span>
+                        <span>
+                            <a href="@Url.Action("Details", "UserNews", new { id = newsItem.Id })" class="text-white">
+                                @newsItem.Title
+                            </a> |
+                        </span>
                     }
                 </marquee>
             </div>
@@ -109,10 +113,10 @@
 
     @if (homeViewModel?.LiveScores != null && homeViewModel.LiveScores.Any())
     {
-        <div class="container live-scores mt-3 p-3" style="background-color: #f8f9fa; border-radius: 8px; box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);">
-            <h3 class="text-center">Today's Matches</h3>
-            <table class="table table-bordered">
-                <thead>
+        <div class="container live-scores mt-3 p-4" style="background-color: #f8f9fa; border-radius: 12px; box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);">
+            <h3 class="text-center mb-4">⚽ Today's Matches ⚽</h3>
+            <table class="table table-borderless live-scores-table">
+                <thead class="table-header">
                     <tr>
                         <th>Competition</th>
                         <th>Home</th>
@@ -132,27 +136,28 @@
                         var status = match["status"].ToString();
                         var matchTime = match["scheduled"]?.ToString() ?? "N/A";
 
-                        // Customize status text
+                        // Customize status text with icons
                         string displayStatus = status switch
                         {
-                            "NOT STARTED" => "Soon",
-                            "IN PLAY" => "Live",
-                            "FINISHED" => "Finished",
+                            "NOT STARTED" => "<i class='fas fa-clock text-warning'></i> Soon",
+                            "IN PLAY" => "<i class='fas fa-play text-success'></i> Live",
+                            "FINISHED" => "<i class='fas fa-flag-checkered text-danger'></i> Finished",
+                            "ADDED TIME" => "<i class='fas fa-clock text-warning'></i> extra time",
                             _ => status
                         };
 
                         // Apply styles based on status
-                        string statusClass = displayStatus == "Live" ? "text-success font-weight-bold" :
-                        displayStatus == "Finished" ? "text-danger font-weight-bold" :
-                        displayStatus == "Soon" ? "text-warning font-weight-bold" : "";
+                        string statusClass = displayStatus.Contains("Live") ? "text-success " :
+                        displayStatus.Contains("Finished") ? "text-danger " :
+                        displayStatus.Contains("Soon") ? "text-warning " : "";
 
-                        <tr>
-                            <td>@competition</td>
-                            <td>@team1</td>
-                            <td>@score</td>
-                            <td>@team2</td>
-                            <td class="@statusClass">@displayStatus</td>
-                            <td>@matchTime</td>
+                        <tr class="match-row">
+                            <td class="league-name">@competition</td>
+                            <td class="team-name">@team1</td>
+                            <td class="score">@score</td>
+                            <td class="team-name">@team2</td>
+                            <td class="status @statusClass">@Html.Raw(displayStatus)</td>
+                            <td class="match-time">@matchTime</td>
                         </tr>
                     }
                 </tbody>
@@ -176,5 +181,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     @RenderSection("Scripts", required: false)
+
 </body>
 </html>

@@ -17,10 +17,8 @@ namespace EndProject.Controllers
         {
             JObject liveScoresData = await _liveScoreService.GetLiveScoresAsync();
 
-            // Extract the relevant data from the JObject
             var liveScores = liveScoresData["matches"] as JArray;
 
-            // Pass the data to the View using ViewBag
             ViewBag.LiveScores = liveScores;
 
             return View();
