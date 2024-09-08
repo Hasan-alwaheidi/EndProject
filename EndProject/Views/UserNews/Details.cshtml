@@ -4,15 +4,70 @@
     ViewData["Title"] = "News Details";
 }
 
-<h2>@Model.Title</h2>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
-@if (!string.IsNullOrEmpty(Model.ImagePath))
-{
-    <img src="@Model.ImagePath" alt="@Model.Title" style="width: 100%; max-height: 400px; object-fit: cover;" class="mb-3" />
-}
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+    }
 
-<p><strong>Published on:</strong> @Model.DatePublished.ToString("MMMM dd, yyyy")</p>
+    h2 {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        font-size: 36px;
+        color: #003366;
+        margin-bottom: 20px;
+    }
 
-<p>@Model.Content</p>
+    .news-image {
+        width: 100%;
+        max-height: 500px;
+        object-fit: contain; 
+        border-radius: 10px;
+        margin-bottom: 20px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
 
-<a href="@Url.Action("Index", "UserNews")" class="btn btn-secondary">Back to News</a>
+    .published-date {
+        font-size: 16px;
+        color: #888;
+        margin-bottom: 20px;
+    }
+
+    p {
+        font-size: 18px;
+        line-height: 1.6;
+        color: #333;
+    }
+
+    .btn-secondary {
+        background-color: #003366;
+        color: white;
+        font-size: 16px;
+        padding: 10px 20px;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+
+        .btn-secondary:hover {
+            background-color: #00509e;
+            color: #fff;
+        }
+</style>
+
+<div class="container mt-4">
+    <h2>@Model.Title</h2>
+
+    @if (!string.IsNullOrEmpty(Model.ImagePath))
+    {
+        <img src="@Model.ImagePath" alt="@Model.Title" class="news-image" />
+    }
+
+    <p class="published-date">
+        <strong>Published on:</strong> @Model.DatePublished.ToString("MMMM dd, yyyy")
+    </p>
+
+    <p>@Model.Content</p>
+
+    <a href="@Url.Action("Index", "UserNews")" class="btn btn-secondary mt-4">Back to News</a>
+</div>

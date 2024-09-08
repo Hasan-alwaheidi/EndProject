@@ -39,7 +39,7 @@
 .soccer-ball {
     display: inline-block;
     animation: bounce 1s infinite;
-    aaaa
+
 }
 
 .admin-icon {
@@ -47,22 +47,6 @@
     color: #fff;
     margin-left: 15px;
 }
-
-.dropdown-menu {
-    background-color: darkblue;
-    border: none;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-    .dropdown-menu .dropdown-item {
-        color: white;
-        transition: background-color 0.3s ease, color 0.3s ease;
-    }
-
-        .dropdown-menu .dropdown-item:hover {
-            background-color: darkgoldenrod;
-            color: white;
-        }
 
 @keyframes bounce {
     0%, 100% {
@@ -73,8 +57,6 @@
         transform: translateY(-15px);
     }
 }
-
-/* News ticker styles */
 .news-ticker {
     background-color: goldenrod;
     color: white;
@@ -83,55 +65,28 @@
     position: relative;
     z-index: 1100;
 }
-
-/* Media carousel styles */
-#mediaCarousel {
-    max-height: 300px;
+#enhancedCarousel {
+    max-height: 400px;
     overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    margin-top: 5px;
 }
 
-    #mediaCarousel .carousel-inner {
-        width: 100%;
-        height: 100%;
-    }
+.carousel-item img {
+    object-fit: cover;
+    max-height: 400px;
+    width: 100%;
+}
 
-    #mediaCarousel .carousel-item img {
-        width: 100%;
-        max-height: 300px;
-        object-fit: cover;
-        transition: opacity 0.3s ease-in-out;
-        display: block;
-        margin: 0 auto;
-    }
+.carousel-caption {
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 10px;
+    border-radius: 5px;
+}
 
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
-    filter: invert(100%);
-}
-
-.carousel-control-prev,
-.carousel-control-next {
-    width: 5%;
-    opacity: 0.8;
-}
-
-.carousel-indicators li {
-    background-color: #343a40;
-    width: 8px;
-    height: 8px;
+    background-color: rgba(0, 0, 0, 0.5);
     border-radius: 50%;
-    margin: 3px;
-}
-
-.carousel-indicators .active {
-    background-color: #007bff;
+    padding: 15px;
 }
 
 .live-scores {
@@ -189,9 +144,9 @@
     padding: 10px;
 }
 
-.match-time {
+.match2-time {
     font-size: 16px;
-    color: #999;
+    color: black;
     padding: 10px;
 }
 

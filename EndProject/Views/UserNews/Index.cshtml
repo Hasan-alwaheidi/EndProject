@@ -2,11 +2,10 @@
 
 @{
     ViewData["Title"] = "News";
-    var latestNews = Model.FirstOrDefault();
-    var otherNews = Model.Skip(1);
+    var latestNews = Model?.FirstOrDefault(); // Safely get the first news item, if any
+    var otherNews = Model?.Skip(1) ?? Enumerable.Empty<SharedDtos.DTO_s.NewsDto.NewsDetailsDto>(); // Safely skip and handle empty list
 }
 
-<!-- Import a stylish font from Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
 
 <style>
@@ -74,11 +73,11 @@
 
 <h2 class="text-center mb-4 heading-font">Latest News</h2>
 
-<div class="row">
-    <!-- Main News Section (Latest News) -->
-    <div class="col-md-8">
-        @if (latestNews != null)
-        {
+@if (latestNews != null)
+{
+    <div class="row">
+        <!-- Main News Section (Latest News) -->
+        <div class="col-md-8">
             <div class="card mb-4 shadow-lg latest-news-card">
                 @if (!string.IsNullOrEmpty(latestNews.ImagePath))
                 {
@@ -90,23 +89,36 @@
                     <a href="@Url.Action("Details", "UserNews", new { id = latestNews.Id })" class="btn btn-danger">Read More</a>
                 </div>
             </div>
-        }
-    </div>
+        </div>
 
-    <!-- Side News List with Images -->
-    <div class="col-md-4">
-        <h4 class="mb-3 heading-font">More News</h4>
-        <ul class="list-group more-news-list">
-            @foreach (var newsItem in otherNews)
-            {
-                <li class="list-group-item">
-                    <img src="@newsItem.ImagePath" alt="@newsItem.Title" />
-                    <div class="more-news-content">
-                        <div class="more-news-title">@newsItem.Title</div>
-                    </div>
-                    <a href="@Url.Action("Details", "UserNews", new { id = newsItem.Id })" class="btn btn-read-more">Read More</a>
-                </li>
-            }
-        </ul>
+        <!-- Side News List with Images -->
+        <div class="col-md-4">
+            <h4 class="mb-3 heading-font">More News</h4>
+            <ul class="list-group more-news-list">
+                @if (otherNews.Any())
+                {
+                    @foreach (var newsItem in otherNews)
+                    {
+                        <li class="list-group-item">
+                            <img src="@newsItem.ImagePath" alt="@newsItem.Title" />
+                            <div class="more-news-content">
+                                <div class="more-news-title">@newsItem.Title</div>
+                            </div>
+                            <a href="@Url.Action("Details", "UserNews", new { id = newsItem.Id })" class="btn btn-read-more">Read More</a>
+                        </li>
+                    }
+                }
+                else
+                {
+                    <li class="list-group-item">No more news available.</li>
+                }
+            </ul>
+        </div>
     </div>
-</div>
+}
+else
+{
+    <div class="alert alert-info text-center" role="alert">
+        There is no news available at the moment.
+    </div>
+}

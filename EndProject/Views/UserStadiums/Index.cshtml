@@ -1,62 +1,137 @@
-﻿
-@model IEnumerable<FootballApiProject.Models.DTO_s.StadiumsDto.StadiumDto>
-<html>
+﻿@model IEnumerable<FootballApiProject.Models.DTO_s.StadiumsDto.StadiumDto>
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Explore Stadiums - Football Management System</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
     <style>
-.card {
-    border: 1px solid #ddd;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+        /* General Styles */
+        .card {
+            border: none;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+            background-color: #f8f9fa;
+        }
 
-.card-img {
-    max-width: 100%;
-    height: auto;
-}
+            .card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+            }
 
-.card-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 20px;
-}
+        .card-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
 
-.btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
-    color: #fff;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
+        .card-body {
+            padding: 20px;
+            text-align: center;
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
 
-.btn-primary:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px);
-}
-</style>
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .card-text {
+            font-size: 14px;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        /* Button Styles */
+        .btn-primary {
+            background-color: #ff4500;
+            border: none;
+            color: #fff;
+            font-size: 14px;
+            padding: 10px 20px;
+            border-radius: 50px;
+            transition: background-color 0.3s ease;
+            align-self: center;
+        }
+
+            .btn-primary:hover {
+                background-color: #e03e00;
+            }
+
+        /* Container and Grid Layout */
+        .container {
+            padding-top: 40px;
+        }
+
+        .card-deck {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+
+        .card-column {
+            flex: 1 1 300px;
+            max-width: 350px;
+        }
+
+        /* Responsive Design */
+        @@media (max-width: 768px) {
+            .card-img {
+                height: 150px;
+            }
+
+            .card-body {
+                padding: 15px;
+            }
+
+            .card-title {
+                font-size: 18px;
+            }
+
+            .card-text {
+                font-size: 12px;
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="container mt-5">
-    <div class="row">
-        @foreach (var stadium in Model)
-        {
-            <div class="col-md-6 mb-4">
-                <div class="card h-100">
-                    <div class="row no-gutters">
-                        <div class="col-md-4">
-                            <img src="@stadium.ImagePath" class="card-img" alt="@stadium.Name" />
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title">@stadium.Name</h5>
-                                <p class="card-text"><strong>Location:</strong> @stadium.Location</p>
-                                <p class="card-text"><strong>Capacity:</strong> @stadium.Capacity</p>
-                                <a href="@Url.Action("Details", "UserStadiums", new { id = stadium.StadiumId })" class="btn btn-primary">View Details</a>
-                            </div>
+    <div class="container">
+        <div class="text-center mb-4">
+            <h2 class="display-4" style="color: #003366;">Explore Stadiums</h2>
+            <p>Discover the top stadiums and their unique features</p>
+        </div>
+
+        <div class="card-deck">
+            @foreach (var stadium in Model)
+            {
+                <div class="card-column">
+                    <div class="card h-100">
+                        <img src="@stadium.ImagePath" class="card-img" alt="@stadium.Name" />
+                        <div class="card-body">
+                            <h5 class="card-title">@stadium.Name</h5>
+                            <p class="card-text"><strong>Location:</strong> @stadium.Location</p>
+                            <p class="card-text"><strong>Capacity:</strong> @stadium.Capacity</p>
+                            <a href="@Url.Action("Details", "UserStadiums", new { id = stadium.StadiumId })" class="btn btn-success">View Details</a>
                         </div>
                     </div>
                 </div>
-            </div>
-        }
+            }
+        </div>
     </div>
-</div>
+
+    <!-- Optional JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

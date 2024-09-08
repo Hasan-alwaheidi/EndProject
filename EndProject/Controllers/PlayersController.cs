@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.IO;
 using System.Threading.Tasks;
+using System;
+using System.Linq;
 
 public class PlayersController : Controller
 {
@@ -17,8 +19,6 @@ public class PlayersController : Controller
         _playerService = playerService;
         _teamService = teamService;
     }
-
-    // Index action to list all players
     public async Task<IActionResult> Index()
     {
         var players = await _playerService.GetPlayersAsync();
@@ -31,7 +31,13 @@ public class PlayersController : Controller
         var teams = await _teamService.GetTeamsAsync();
 
         ViewBag.Teams = new SelectList(teams, "TeamId", "Name");
-        ViewBag.Positions = Enum.GetValues(typeof(PlayerPosition)).Cast<PlayerPosition>().ToList();
+        ViewBag.Positions = Enum.GetValues(typeof(PlayerPosition))
+            .Cast<PlayerPosition>()
+            .Select(p => new SelectListItem
+            {
+                Value = p.ToString(),
+                Text = p.ToString()
+            }).ToList();
 
         return View();
     }
@@ -61,6 +67,13 @@ public class PlayersController : Controller
 
         var teams = await _teamService.GetTeamsAsync();
         ViewBag.Teams = new SelectList(teams, "TeamId", "Name");
+        ViewBag.Positions = Enum.GetValues(typeof(PlayerPosition))
+            .Cast<PlayerPosition>()
+            .Select(p => new SelectListItem
+            {
+                Value = p.ToString(),
+                Text = p.ToString()
+            }).ToList();
 
         return View(createPlayerDto);
     }
@@ -82,7 +95,7 @@ public class PlayersController : Controller
             Nationality = player.Nationality,
             TeamId = player.TeamId,
             ProfilePicturePath = player.ProfilePicturePath,
-            Description = player.Description 
+            Description = player.Description
         };
 
         var teams = await _teamService.GetTeamsAsync();
@@ -129,7 +142,6 @@ public class PlayersController : Controller
 
         return View(updatePlayerDto);
     }
-
     // GET: Details
     public async Task<IActionResult> Details(int id)
     {
@@ -144,7 +156,7 @@ public class PlayersController : Controller
             Nationality = player.Nationality,
             TeamName = player.TeamName,
             ProfilePicturePath = player.ProfilePicturePath,
-            Description = player.Description 
+            Description = player.Description
         };
 
         return View(playerDetails);
@@ -164,7 +176,7 @@ public class PlayersController : Controller
             Nationality = player.Nationality,
             TeamName = player.TeamName,
             ProfilePicturePath = player.ProfilePicturePath,
-            Description = player.Description 
+            Description = player.Description
         };
 
         return View(playerDetails);

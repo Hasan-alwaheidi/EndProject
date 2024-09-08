@@ -20,19 +20,23 @@ namespace EndProject.Controllers.UserControllers
         {
             var newsItems = await _newsService.GetNewsItemsAsync();
 
-            // Map NewsDtoo to NewsDetailsDto
-            var newsDetailsList = newsItems.Select(newsItem => new NewsDetailsDto
-            {
-                Id = newsItem.Id,
-                Title = newsItem.Title,
-                Content = newsItem.Content,
-                DatePublished = newsItem.DatePublished,
-                ImagePath = newsItem.ImagePath
-                // Map other necessary properties here
-            }).ToList();
+            // Order news by DatePublished descending so the newest news appears first
+            var newsDetailsList = newsItems
+                .OrderByDescending(newsItem => newsItem.DatePublished) // Ordering by DatePublished
+                .Select(newsItem => new NewsDetailsDto
+                {
+                    Id = newsItem.Id,
+                    Title = newsItem.Title,
+                    Content = newsItem.Content,
+                    DatePublished = newsItem.DatePublished,
+                    ImagePath = newsItem.ImagePath
+                    // Map other necessary properties here
+                })
+                .ToList();
 
             return View(newsDetailsList);
         }
+
 
         public async Task<IActionResult> Details(int id)
         {

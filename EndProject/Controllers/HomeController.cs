@@ -1,6 +1,7 @@
 using EndProject.Services;
 using FootballApiProject.Models.DTO_s.MatchsDto;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
 using SharedDtos.DTO_s.NewsDto;
 using System.Linq;
@@ -61,10 +62,13 @@ public class HomeController : Controller
     {
         "LaLiga Santander",
         "Premier League",
+        "Serie A",
         "Bundesliga",
         "Ligue 1",
         "Champions League",
-        "Serie A"
+        "Europa League",
+        "UEFA Nations League"
+
     };
 
         // Sort live scores based on competition priority and status (live matches on top)

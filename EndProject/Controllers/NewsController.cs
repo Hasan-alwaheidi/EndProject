@@ -13,12 +13,12 @@ public class NewsController : Controller
     {
         _newsService = newsService;
     }
-
-    // Index action to list all news items
     public async Task<IActionResult> Index()
     {
         var newsItems = await _newsService.GetNewsItemsAsync();
-        return View(newsItems);
+        var orderedNewsItems = newsItems.OrderByDescending(n => n.DatePublished).ToList();
+
+        return View(orderedNewsItems);
     }
 
     // GET: Create
@@ -26,8 +26,6 @@ public class NewsController : Controller
     {
         return View();
     }
-
-    // POST: Create
     [HttpPost]
     public async Task<IActionResult> Create(CreateNewsDto createNewsDto, IFormFile image)
     {
@@ -41,6 +39,9 @@ public class NewsController : Controller
             createNewsDto.ImagePath = "/newsimages/" + Path.GetFileName(image.FileName);
         }
 
+        // Set the DatePublished to the current date and time
+        createNewsDto.DatePublished = DateTime.Now;
+
         if (ModelState.IsValid)
         {
             var success = await _newsService.CreateNewsItemAsync(createNewsDto);
@@ -52,6 +53,7 @@ public class NewsController : Controller
 
         return View(createNewsDto);
     }
+
 
     // GET: Edit
     public async Task<IActionResult> Edit(int id)
@@ -74,11 +76,9 @@ public class NewsController : Controller
         return View(updateNewsDto);
     }
 
-    // POST: Edit
     [HttpPost]
     public async Task<IActionResult> Edit(int id, UpdateNewsDto updateNewsDto, IFormFile image)
     {
-        // Get the existing news item to retrieve the current image path
         var existingNews = await _newsService.GetNewsItemByIdAsync(id);
         if (existingNews == null)
         {
@@ -96,9 +96,11 @@ public class NewsController : Controller
         }
         else
         {
-            // Retain the existing image if no new image is uploaded
-            updateNewsDto.ImagePath = existingNews.ImagePath;
+            updateNewsDto.ImagePath = existingNews.ImagePath; // Retain the existing image if no new image is uploaded
         }
+
+        // Preserve the original DatePublished value
+        updateNewsDto.DatePublished = existingNews.DatePublished;
 
         if (ModelState.IsValid)
         {
