@@ -14,7 +14,6 @@ public class StadiumsController : Controller
         _stadiumService = stadiumService;
     }
 
-    // Index action to list all stadiums
     public async Task<IActionResult> Index()
     {
         var stadiums = await _stadiumService.GetStadiumsAsync();

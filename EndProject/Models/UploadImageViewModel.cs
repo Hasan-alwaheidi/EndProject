@@ -2,7 +2,7 @@
 {
     public class UploadImageViewModel
     {
-        public IFormFile ImageFile { get; set; }
+        public IFormFile? ImageFile { get; set; }
 
     }
 }

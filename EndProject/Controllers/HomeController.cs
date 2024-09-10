@@ -71,15 +71,14 @@ public class HomeController : Controller
 
     };
 
-        // Sort live scores based on competition priority and status (live matches on top)
         var sortedLiveScores = liveScoresArray
             .OrderBy(match =>
             {
                 var competitionName = match["competition"]?["name"]?.ToString();
                 var priority = prioritizedCompetitions.IndexOf(competitionName);
-                return priority == -1 ? int.MaxValue : priority; // Unlisted competitions go to the end
+                return priority == -1 ? int.MaxValue : priority; 
             })
-            .ThenByDescending(match => match["status"].ToString() == "IN PLAY") // Live matches always on top
+            .ThenByDescending(match => match["status"].ToString() == "IN PLAY")
             .ToList();
 
         var model = new HomeViewModel
@@ -87,7 +86,7 @@ public class HomeController : Controller
             Matches = matches.ToList(),
             SlideshowImages = imagePaths,
             NewsItems = newsItems.ToList(),
-            LiveScores = new JArray(sortedLiveScores) // Use the sorted live scores
+            LiveScores = new JArray(sortedLiveScores)
         };
 
         _logger.LogInformation("Successfully fetched matches, slideshow images, and news items.");

@@ -52,13 +52,11 @@ namespace EndProject.Services
 
         public async Task<IEnumerable<MatchDto>> GetPastMatchesAsync()
         {
-            // Assuming your API has an endpoint for past matches
             return await _httpClient.GetFromJsonAsync<IEnumerable<MatchDto>>("api/matches/past");
         }
 
         public async Task<IEnumerable<MatchDto>> GetUpcomingMatchesAsync()
         {
-            // Assuming your API has an endpoint for upcoming matches
             return await _httpClient.GetFromJsonAsync<IEnumerable<MatchDto>>("api/matches/upcoming");
         }
     }

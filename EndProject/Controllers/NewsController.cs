@@ -38,8 +38,6 @@ public class NewsController : Controller
             }
             createNewsDto.ImagePath = "/newsimages/" + Path.GetFileName(image.FileName);
         }
-
-        // Set the DatePublished to the current date and time
         createNewsDto.DatePublished = DateTime.Now;
 
         if (ModelState.IsValid)
@@ -96,10 +94,8 @@ public class NewsController : Controller
         }
         else
         {
-            updateNewsDto.ImagePath = existingNews.ImagePath; // Retain the existing image if no new image is uploaded
+            updateNewsDto.ImagePath = existingNews.ImagePath;
         }
-
-        // Preserve the original DatePublished value
         updateNewsDto.DatePublished = existingNews.DatePublished;
 
         if (ModelState.IsValid)
@@ -113,8 +109,6 @@ public class NewsController : Controller
 
         return View(updateNewsDto);
     }
-
-    // GET: Delete
     public async Task<IActionResult> Delete(int id)
     {
         var newsItem = await _newsService.GetNewsItemByIdAsync(id);
@@ -134,17 +128,11 @@ public class NewsController : Controller
         {
             return NotFound();
         }
-
-        // Get the full path to the image file
         var imagePath = Path.Combine("wwwroot", newsItem.ImagePath.TrimStart('/'));
-
-        // Check if the file exists and delete it
         if (System.IO.File.Exists(imagePath))
         {
             System.IO.File.Delete(imagePath);
         }
-
-        // Proceed to delete the news item from the database
         var success = await _newsService.DeleteNewsItemAsync(id);
         if (success)
         {

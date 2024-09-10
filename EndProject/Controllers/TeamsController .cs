@@ -45,7 +45,7 @@ public class TeamsController : Controller
         if (logo != null && logo.Length > 0)
         {
             var uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "images", "teams");
-            Directory.CreateDirectory(uploadsFolder); // Ensure the directory exists
+            Directory.CreateDirectory(uploadsFolder); 
 
             var uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(logo.FileName);
             var filePath = Path.Combine(uploadsFolder, uniqueFileName);
@@ -105,7 +105,7 @@ public class TeamsController : Controller
         if (logo != null && logo.Length > 0)
         {
             var uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "images", "teams");
-            Directory.CreateDirectory(uploadsFolder); // Ensure the directory exists
+            Directory.CreateDirectory(uploadsFolder); 
 
             var uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(logo.FileName);
             var filePath = Path.Combine(uploadsFolder, uniqueFileName);
@@ -114,8 +114,6 @@ public class TeamsController : Controller
             {
                 await logo.CopyToAsync(stream);
             }
-
-            // Delete the old logo file if a new one is uploaded
             if (!string.IsNullOrEmpty(existingTeam.LogoPath))
             {
                 var oldLogoPath = Path.Combine(_hostingEnvironment.WebRootPath, existingTeam.LogoPath.TrimStart('/'));

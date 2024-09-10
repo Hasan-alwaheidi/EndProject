@@ -28,9 +28,8 @@ public class SlideshowController : Controller
         {
             if (model.ImageFile != null && model.ImageFile.Length > 0)
             {
-                // Ensure the images are saved in the slideshow folder
                 var uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath,"images" ,"Slideshow");
-                Directory.CreateDirectory(uploadsFolder); // Ensure the directory exists
+                Directory.CreateDirectory(uploadsFolder); 
 
                 var uniqueFileName = Guid.NewGuid().ToString() + "_" + model.ImageFile.FileName;
                 var filePath = Path.Combine(uploadsFolder, uniqueFileName);
@@ -49,7 +48,6 @@ public class SlideshowController : Controller
 
     public IActionResult Manage()
     {
-        // Get images from the slideshow folder
         var imageFolder = Path.Combine(_hostingEnvironment.WebRootPath,"images","Slideshow");
         var imagePaths = Directory.GetFiles(imageFolder)
                                   .Select(f => "/images/Slideshow/" + Path.GetFileName(f))

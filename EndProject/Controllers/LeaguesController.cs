@@ -65,7 +65,7 @@ public class LeaguesController : Controller
             Country = league.Country,
             Season = league.Season,
             LogoPath = league.LogoPath,
-            Description = league.Description // Include description
+            Description = league.Description
         };
 
         return View(updateLeagueDto);

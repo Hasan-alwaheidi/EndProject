@@ -1,7 +1,4 @@
-﻿using FootballApiProject.Models.DTO_s.PlayersDto; // Adjust the namespace as needed
-using System.Net.Http;
-using System.Net.Http.Json;
-using System.Threading.Tasks;
+﻿using FootballApiProject.Models.DTO_s.PlayersDto;
 
 namespace EndProject.Services
 {

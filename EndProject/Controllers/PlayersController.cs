@@ -1,13 +1,8 @@
 ﻿using EndProject.Services;
 using FootballApiProject.Enums;
 using FootballApiProject.Models.DTO_s.PlayersDto;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.IO;
-using System.Threading.Tasks;
-using System;
-using System.Linq;
 
 public class PlayersController : Controller
 {
